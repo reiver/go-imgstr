@@ -1,0 +1,108 @@
+package imgstr_test
+
+import (
+	"github.com/reiver/go-imgstr"
+
+	"github.com/reiver/go-dynaimg"
+
+	"testing"
+)
+
+func TestString_dye(t *testing.T) {
+
+	tests := []struct{
+		Width  int
+		Height int
+		R uint8
+		G uint8
+		B uint8
+		A uint8
+		Expected string
+	}{
+		{
+			Width:  256,
+			Height: 128,
+			R: 0,
+			G: 0,
+			B: 0,
+			A: 255,
+			Expected: "IMAGE:iVBORw0KGgoAAAANSUhEUgAAAQAAAACACAYAAADktbcKAAABp0lEQVR4nOzUMRHAMAzAQLcX/pQTGB70j0CTzszcoezbDmDPvx0A7DEACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACDMACHsBAAD//+l4AgPqMq3qAAAAAElFTkSuQmCC",
+		},
+		{
+			Width:  128,
+			Height: 64,
+			R: 255,
+			G: 255,
+			B: 255,
+			A: 255,
+			Expected: "IMAGE:iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAYAAADS1n9/AAAAwElEQVR4nOzSMRGAAAzAQMrh33KR0SH/CjLk2919wmZmrhsuvdcB3DJAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIO4PAAD//yMNBINihuLZAAAAAElFTkSuQmCC",
+		},
+		{
+			Width:  64,
+			Height: 128,
+			R: 255,
+			G: 199,
+			B: 6,
+			A: 255,
+			Expected: "IMAGE:iVBORw0KGgoAAAANSUhEUgAAAEAAAACACAIAAAA04/g9AAAAqElEQVR4nOzPUQkAIQDA0OMQ+7cylobw4yHsJdjGXvN72a8DbjWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oJ0AAAD//zJyAs/X1BvsAAAAAElFTkSuQmCC",
+		},
+		{
+			Width:  256,
+			Height: 64,
+			R: 0,
+			G: 111,
+			B: 184,
+			A: 255,
+			Expected: "IMAGE:iVBORw0KGgoAAAANSUhEUgAAAQAAAABACAYAAAD1Xam+AAAA7klEQVR4nOzUMRWAMBTAwMJDHG7QghvcURl/yJ2CTLnW8/2r7L2P6QSYck4HAHMMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMIMAMJ2AAAA//8e/AODR8guTAAAAABJRU5ErkJggg==",
+		},
+		{
+			Width:  64,
+			Height: 256,
+			R: 44,
+			G: 181,
+			B: 233,
+			A: 255,
+			Expected: "IMAGE:iVBORw0KGgoAAAANSUhEUgAAAEAAAAEACAIAAACMJOdRAAABKUlEQVR4nOzPUQkAIQDA0OMwjvUNZQtD+PEQ9hJsY679vezXAbca0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0E4AAAD//2liA83/6e3PAAAAAElFTkSuQmCC",
+		},
+	}
+
+	for testNumber, test := range tests {
+
+		const depth = 4
+
+		byteSize := test.Width * test.Height * depth
+
+		var buffer []uint8 = make([]uint8, byteSize)
+
+		var frame dynaimg.RGBA = dynaimg.RGBA{
+			Pix: buffer[:],
+
+			Width:  test.Width,
+			Height: test.Height,
+		}
+
+		for i:=0; i<len(buffer); i++ {
+			switch i%4 {
+			case 0:
+				buffer[i] = test.R
+			case 1:
+				buffer[i] = test.G
+			case 2:
+				buffer[i] = test.B
+			case 3:
+				buffer[i] = test.A
+			}
+		}
+
+		actual   := imgstr.ImageString(frame)
+		expected := test.Expected
+
+		if expected != actual {
+			t.Errorf("For test #%d, the actual serialized frame is not what was expected.", testNumber)
+			t.Logf("rgba(%d,%d,%d,%d)", test.R, test.G, test.B, test.A)
+			t.Logf("EXPECTED: %q", expected)
+			t.Logf("ACTUAL:   %q", actual)
+			continue
+		}
+	}
+}
